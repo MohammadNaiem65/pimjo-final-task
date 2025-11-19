@@ -5,7 +5,7 @@ import Input from "./Input";
 
 export default function Links() {
   return (
-    <div className="flex items-center justify-between gap-x-6">
+    <div className="hidden items-center justify-between gap-x-6 lg:flex">
       <Input />
 
       <div className="flex items-center justify-center gap-x-2">

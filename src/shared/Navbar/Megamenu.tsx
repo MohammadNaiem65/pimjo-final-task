@@ -32,7 +32,7 @@ export default function Megamenu({ label, items }: MegaMenuProps) {
   return (
     <div className="relative">
       <MegamenuTrigger
-        className="peer flex items-center justify-center gap-x-0.5 [&:has(+[data-state=open])]:bg-gray-50 [&:has(+[data-state=open])_svg]:rotate-180"
+        className="peer flex items-center justify-center gap-x-0.5 hover:bg-gray-100 [&:has(+[data-state=open])]:bg-gray-100 [&:has(+[data-state=open])]:text-[#1F2937] [&:has(+[data-state=open])_svg]:rotate-180"
         handleToggle={handleToggle}
       >
         {label} <ChevronDown className="size-3.5 text-[#6B7280]" />
@@ -57,7 +57,7 @@ function ListItem({ item }: { item: ColumnItem }) {
     <li>
       <Link
         href={item.href}
-        className="flex flex-row items-start justify-between gap-x-3 rounded-xl p-4 hover:bg-gray-50"
+        className="flex flex-row items-start justify-between gap-x-3 rounded-xl p-4 hover:bg-gray-100"
       >
         <Image
           src={`/icons/${item.icon}.svg`}
@@ -66,8 +66,10 @@ function ListItem({ item }: { item: ColumnItem }) {
           height={24}
         />
         <div className="flex flex-col gap-y-1">
-          <span className="text-title text-base font-medium">{item.title}</span>
-          <p className="text-text-secondary text-sm leading-snug">
+          <span className="text-base font-medium text-[#374151]">
+            {item.title}
+          </span>
+          <p className="text-sm leading-snug text-[#6B7280]">
             {item.description}
           </p>
         </div>

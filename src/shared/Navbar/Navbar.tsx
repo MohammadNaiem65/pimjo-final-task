@@ -3,6 +3,7 @@ import Link from "next/link";
 import Button from "../Button";
 import Links from "../Links";
 import Megamenu from "./Megamenu";
+import MobileMenubar from "./MobileMenubar";
 
 // Base interface without type property
 interface BaseNavItem {
@@ -10,7 +11,7 @@ interface BaseNavItem {
   label: string;
 }
 
-// Interface for regular nav items (without type or type !== "mega")
+// Interface for regular nav items (without type or type !== "mega")j
 export interface RegularNavItem extends BaseNavItem {
   type?: never;
   href: string;
@@ -47,14 +48,14 @@ export default async function Navbar() {
 
   return (
     <nav className="bg-white text-[#374151] [--color-border:#EDEDED]">
-      <div className="mx-auto h-5 w-[1391px] border-x border-(--color-border)" />
+      <div className="invisible mx-auto hidden h-5 w-[1391px] border-x border-(--color-border) lg:visible lg:block" />
 
       <div className="border-y border-(--color-border)">
-        <div className="mx-auto flex w-[1391px] items-center justify-between border-x border-(--color-border) px-8 py-5">
+        <div className="mx-auto flex w-full items-center justify-between border-x border-(--color-border) px-8 py-5 lg:w-[1391px]">
           <div className="flex items-center justify-between gap-x-11">
             <Image src="/logo.png" alt="logo" width={110} height={44} />
 
-            <div className="flex items-center justify-between gap-x-2">
+            <div className="invisible hidden items-center justify-between gap-x-2 lg:visible lg:flex">
               {menu.map((item: NavItem) =>
                 item.type === "mega" ? (
                   <Megamenu
@@ -64,7 +65,7 @@ export default async function Navbar() {
                   />
                 ) : (
                   <Link href={item.href} key={item.id}>
-                    <Button className="cursor-pointer rounded-md px-2 py-1.5 text-sm hover:text-[#374151]">
+                    <Button className="cursor-pointer rounded-md px-2 py-1.5 text-sm hover:bg-gray-100 hover:text-[#374151]">
                       {item.label}
                     </Button>
                   </Link>
@@ -74,6 +75,8 @@ export default async function Navbar() {
           </div>
 
           <Links />
+
+          <MobileMenubar items={menu} />
         </div>
       </div>
     </nav>
