@@ -4,6 +4,7 @@ import Button from "../Button";
 import Links from "../Links";
 import Megamenu from "./Megamenu";
 import MobileMenubar from "./MobileMenubar";
+import SearchDialog from "./SearchDialog";
 
 // Base interface without type property
 interface BaseNavItem {
@@ -52,10 +53,12 @@ export default async function Navbar() {
 
       <div className="border-y border-(--color-border)">
         <div className="mx-auto flex w-full items-center justify-between border-x border-(--color-border) px-8 py-5 lg:w-[1391px]">
+          {/* Left Side */}
           <div className="flex items-center justify-between gap-x-11">
             <Image src="/logo.png" alt="logo" width={110} height={44} />
 
-            <div className="invisible hidden items-center justify-between gap-x-2 lg:visible lg:flex">
+            {/* Megamenu options for larger devices */}
+            <div className="hidden items-center justify-between gap-x-2 lg:flex">
               {menu.map((item: NavItem) =>
                 item.type === "mega" ? (
                   <Megamenu
@@ -74,9 +77,15 @@ export default async function Navbar() {
             </div>
           </div>
 
+          {/* Right Side */}
+          {/* Larger devices only */}
           <Links />
 
-          <MobileMenubar items={menu} />
+          {/* Smaller devices only */}
+          <div className="flex items-center lg:hidden">
+            <SearchDialog />
+            <MobileMenubar items={menu} />
+          </div>
         </div>
       </div>
     </nav>

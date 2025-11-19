@@ -24,11 +24,7 @@ export default function MobileMenubar({ items }: SmNavLinksProps) {
   };
 
   return (
-    <div
-      className={cn(
-        "visible relative flex items-center justify-center lg:invisible lg:hidden",
-      )}
-    >
+    <div className={cn("relative flex items-center justify-center")}>
       <button onClick={toggleOpenState} className="cursor-pointer">
         {isOpen ? <X className="size-8" /> : <Menu className="size-8" />}
       </button>
