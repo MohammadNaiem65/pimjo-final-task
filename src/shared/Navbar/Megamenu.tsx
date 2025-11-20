@@ -4,7 +4,7 @@ import { cn } from "@/utils";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { ComponentProps, useRef } from "react";
+import React, { ComponentProps, useEffect, useRef } from "react";
 import Button from "../Button";
 import { ColumnItem } from "./Navbar";
 
@@ -13,27 +13,51 @@ interface MegaMenuProps {
   items: ColumnItem[];
 }
 
-type ContentState = "open" | "close";
-
 export default function Megamenu({ label, items }: MegaMenuProps) {
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const handleToggle = () => {
-    const content = contentRef.current;
-    if (!content) return;
-
-    const currentState =
-      (content.dataset.state as ContentState | undefined) ?? "close";
-    const nextState: ContentState = currentState === "open" ? "close" : "open";
-
-    content.dataset.state = nextState;
+  const openMenu = () => {
+    if (contentRef.current?.dataset.state === "close") {
+      contentRef.current.dataset.state = "open";
+    }
   };
+
+  const closeMenu = () => {
+    if (contentRef.current?.dataset.state === "open") {
+      contentRef.current.dataset.state = "close";
+    }
+  };
+
+  const toggleMenu = () => {
+    if (contentRef.current?.dataset.state === "close") {
+      openMenu();
+    } else {
+      closeMenu();
+    }
+  };
+
+  useEffect(() => {
+    const handlePointerDown = (event: PointerEvent) => {
+      const target = event.target as Node;
+      if (
+        !triggerRef.current?.contains(target) &&
+        !contentRef.current?.contains(target)
+      ) {
+        closeMenu();
+      }
+    };
+
+    window.addEventListener("pointerdown", handlePointerDown);
+    return () => window.removeEventListener("pointerdown", handlePointerDown);
+  }, []);
 
   return (
     <div className="relative">
       <MegamenuTrigger
-        className="peer flex items-center justify-center gap-x-0.5 hover:bg-gray-100 [&:has(+[data-state=open])]:bg-gray-100 [&:has(+[data-state=open])]:text-[#1F2937] [&:has(+[data-state=open])_svg]:rotate-180"
-        handleToggle={handleToggle}
+        ref={triggerRef}
+        className="peer flex items-center justify-center gap-x-0.5 text-text hover:bg-gray-secondary [&:has(+[data-state=open])]:bg-gray-secondary [&:has(+[data-state=open])]:text-text-title [&:has(+[data-state=open])_svg]:rotate-180"
+        handleToggle={toggleMenu}
       >
         {label} <ChevronDown className="size-3.5 text-[#6B7280]" />
       </MegamenuTrigger>
@@ -57,7 +81,7 @@ function ListItem({ item }: { item: ColumnItem }) {
     <li>
       <Link
         href={item.href}
-        className="flex flex-row items-start justify-between gap-x-3 rounded-xl p-4 hover:bg-gray-100"
+        className="flex flex-row items-start justify-between gap-x-3 rounded-xl p-4 outline-(--color-border) hover:bg-gray-100 focus-visible:bg-gray-100"
       >
         <Image
           src={`/icons/${item.icon}.svg`}
@@ -82,15 +106,20 @@ function MegamenuTrigger({
   children,
   className,
   handleToggle,
+  ...props
 }: {
   children: React.ReactNode;
   className?: string | undefined;
   handleToggle: () => void;
-}) {
+} & ComponentProps<typeof Button>) {
   return (
     <Button
-      className={cn(className, "cursor-pointer rounded-lg px-2 py-1.5 text-sm")}
+      className={cn(
+        className,
+        "cursor-pointer rounded-lg px-2 py-1.5 text-sm outline-(--color-border) duration-300 focus-visible:bg-gray-secondary focus-visible:text-text-title",
+      )}
       onClick={handleToggle}
+      {...props}
     >
       {children}
     </Button>
