@@ -81,7 +81,7 @@ function ListItem({ item }: { item: ColumnItem }) {
     <li>
       <Link
         href={item.href}
-        className="flex flex-row items-start justify-between gap-x-3 rounded-xl p-4 outline-(--color-border) hover:bg-gray-100 focus-visible:bg-gray-100"
+        className="group flex h-full w-full flex-row items-start justify-between gap-x-3 rounded-xl p-4 outline-(--color-border) hover:bg-gray-100 focus-visible:bg-gray-100"
       >
         <Image
           src={`/icons/${item.icon}.svg`}
@@ -90,10 +90,10 @@ function ListItem({ item }: { item: ColumnItem }) {
           height={24}
         />
         <div className="flex flex-col gap-y-1">
-          <span className="text-base font-medium text-[#374151]">
+          <span className="text-base font-medium text-text-title group-hover:text-gray-800">
             {item.title}
           </span>
-          <p className="text-sm leading-snug text-[#6B7280]">
+          <p className="text-sm leading-snug text-text-secondary group-hover:text-gray-500">
             {item.description}
           </p>
         </div>
