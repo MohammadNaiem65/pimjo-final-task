@@ -48,10 +48,10 @@ export default async function Navbar() {
   const menu: NavItem[] = await res.json();
 
   return (
-    <header className="bg-white text-[#374151] [--color-border:#EDEDED]">
+    <section className="bg-white text-[#374151] [--color-border:#EDEDED]">
       <div className="invisible mx-auto hidden h-5 w-[1391px] border-x border-(--color-border) lg:visible lg:block" />
 
-      <div className="border-y border-(--color-border)">
+      <header className="border-y border-(--color-border)">
         <div className="mx-auto flex w-full items-center justify-between border-x border-(--color-border) px-8 py-5 lg:w-[1391px]">
           {/* Left Side */}
           <div className="flex items-center justify-between gap-x-11">
@@ -92,7 +92,7 @@ export default async function Navbar() {
             <MobileMenubar items={menu} />
           </div>
         </div>
-      </div>
-    </header>
+      </header>
+    </section>
   );
 }
