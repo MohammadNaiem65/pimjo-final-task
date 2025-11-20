@@ -4,7 +4,7 @@ import { cn } from "@/utils";
 import { ChevronRight, Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Activity, useState } from "react";
+import { Activity, useEffect, useRef, useState } from "react";
 import Collapsible, {
   CollapsibleContent,
   CollapsibleTrigger,
@@ -18,18 +18,41 @@ interface SmNavLinksProps {
 
 export default function MobileMenubar({ items }: SmNavLinksProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const toggleOpenState = () => {
     setIsOpen((prev) => !prev);
   };
 
+  useEffect(() => {
+    const handlePointerDown = (event: PointerEvent) => {
+      const target = event.target as Node;
+      if (
+        !triggerRef.current?.contains(target) &&
+        !contentRef.current?.contains(target)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener("pointerdown", handlePointerDown);
+    return () => window.removeEventListener("pointerdown", handlePointerDown);
+  }, []);
+
   return (
     <div className={cn("relative flex items-center justify-center")}>
-      <button onClick={toggleOpenState} className="cursor-pointer">
+      <button
+        ref={triggerRef}
+        onClick={toggleOpenState}
+        className="cursor-pointer"
+      >
         {isOpen ? <X className="size-8" /> : <Menu className="size-8" />}
       </button>
+
       <Activity mode={isOpen ? "visible" : "hidden"}>
         <div
+          ref={contentRef}
           className={cn(
             "absolute top-12 right-0 min-w-62.5 rounded-xl border border-(--color-border) bg-white p-3 shadow-md",
           )}

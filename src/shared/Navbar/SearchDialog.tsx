@@ -3,7 +3,7 @@
 import { Search } from "lucide-react";
 import { useRef } from "react";
 import Button from "../Button";
-import Input from "../Input";
+import Input from "./Input";
 
 export default function SearchDialog() {
   const modalRef = useRef<HTMLDialogElement>(null);
@@ -27,7 +27,7 @@ export default function SearchDialog() {
         closedby="any"
         className="absolute top-1/2 left-1/2 min-h-56 min-w-80 -translate-x-1/2 -translate-y-1/2 rounded-xl backdrop:bg-[#374151CC]"
       >
-        <Input className="rounded-none border-0 border-b" />
+        <Input className="w-full rounded-none border-0 border-b [&_input]:rounded-none [&_input]:border-0" />
 
         <div className="mt-16">
           <p className="text-center text-sm text-gray-500">
