@@ -60,7 +60,7 @@ export default function MobileMenubar({ items }: SmNavLinksProps) {
           <ul className="flex flex-col gap-y-2 py-2">
             {items.map((item) =>
               item.type === "mega" ? (
-                <li key={item.id} className="text-lg text-[#1F2937]">
+                <li key={item.id} className="text-lg text-text-title">
                   <Collapsible className="group details-content:h-0 details-content:overflow-hidden details-content:transition-all details-content:transition-discrete details-content:duration-1000 [&[open]::details-content]:h-auto">
                     <CollapsibleTrigger className="flex list-outside items-center gap-0.5">
                       <span className="transition-transform group-open:rotate-90">
@@ -84,13 +84,21 @@ export default function MobileMenubar({ items }: SmNavLinksProps) {
                   </Collapsible>
                 </li>
               ) : (
-                <li key={item.id} className="ml-6 text-lg text-[#1F2937]">
+                <li key={item.id} className="ml-6 text-lg text-text-title">
                   <Link href={item.href}>{item.label}</Link>
                 </li>
               ),
             )}
           </ul>
           <Separator />
+          <div className="mt-4 flex flex-col gap-y-2">
+            <Link href={"#"} className="text-lg text-text-title">
+              Sign In
+            </Link>
+            <Link href={"#"} className="text-lg text-text-title">
+              Pricing & FAQ
+            </Link>
+          </div>
           <div className="mt-4 flex items-center justify-start gap-x-2">
             <Icon iconSrc="/tweeter.svg" iconAlt="tweeter" />
             <Icon iconSrc="/github.svg" iconAlt="github" />
